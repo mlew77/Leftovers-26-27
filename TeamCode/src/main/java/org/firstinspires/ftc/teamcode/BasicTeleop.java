@@ -5,16 +5,16 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp(name="Basic Mecanum Drive", group="Linear Opmode")
+@TeleOp(name="teleop", group="Linear Opmode")
 public class BasicTeleop extends LinearOpMode {
 
     @Override
     public void runOpMode() {
         // 1. Declare and initialize the 4 drivetrain motors
-        DcMotor leftFront = hardwareMap.get(DcMotor.class, "left_front");
-        DcMotor rightFront = hardwareMap.get(DcMotor.class, "right_front");
-        DcMotor leftBack = hardwareMap.get(DcMotor.class, "left_back");
-        DcMotor rightBack = hardwareMap.get(DcMotor.class, "right_back");
+        DcMotor leftFront = hardwareMap.get(DcMotor.class, "leftFront");
+        DcMotor rightFront = hardwareMap.get(DcMotor.class, "rightFront");
+        DcMotor leftBack = hardwareMap.get(DcMotor.class, "leftBack");
+        DcMotor rightBack = hardwareMap.get(DcMotor.class, "rightBack");
 
         // 2. Reverse left-side motors so positive power moves the robot forward
         // (Adjust these if your physical robot drives backward or spins instead of strafing)
@@ -36,7 +36,7 @@ public class BasicTeleop extends LinearOpMode {
             double x = gamepad1.left_stick_x * 1.1; // Strafe (multiplied by 1.1 to counteract friction)
             double rx = gamepad1.right_stick_x; // Turning
 
-            // Mecanum drive power calculation matrix
+
             double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1.0);
             double frontLeftPower = (y + x + rx) / denominator;
             double backLeftPower = (y - x + rx) / denominator;
@@ -49,7 +49,7 @@ public class BasicTeleop extends LinearOpMode {
             rightFront.setPower(frontRightPower);
             rightBack.setPower(backRightPower);
 
-            // Optional: send power telemetry data to driver station screen
+
             telemetry.addData("Status", "Running");
             telemetry.addData("Front Motors", "Left: %.2f, Right: %.2f", frontLeftPower, frontRightPower);
             telemetry.addData("Back Motors", "Left: %.2f, Right: %.2f", backLeftPower, backRightPower);
